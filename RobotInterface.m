@@ -1,29 +1,36 @@
 classdef RobotInterface < handle
-  properties (SetAccess = protected, GetAccess = protected)
-    Port
-    ServoMin
-    ServoMax
-    DegreeMin
-    DegreeMax
-  end
-
-  methods (Abstract)
-    setTarget(obj, servo, target)
-    setAccel(obj, servo, accel)
-    setSpeed(obj, servo, speed)
-    goHome(obj)
-  end
-
-  methods (Static)
-    function out = mapMinMax(x, inMin, inMax, outMin, outMax)
-      out = (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMax;
+    properties (SetAccess = protected, GetAccess = protected)
+        Verbose
+        Port
+        ServoMin
+        ServoMax
+        DegreeMin
+        DegreeMax
+        ServoCount
     end
-  end
-
-  methods
-    function out = map(obj, degree)
-      out = RobotInterface.mapMinMax(degree, obj.DegreeMin, obj.DegreeMax, obj.ServoMin, obj.ServoMax);
+    
+    methods (Abstract)
+        setTarget(obj, servo, target)
+        setAccel(obj, servo, accel)
+        setSpeed(obj, servo, speed)
+        goHome(obj)
     end
-  end
+    
+    methods (Static)
+        function out = mapMinMax(x, inMin, inMax, outMin, outMax)
+            out = (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMax;
+        end
+    end
+    
+    methods
+        function out = map(obj, degree)
+            out = RobotInterface.mapMinMax(degree, obj.DegreeMin, obj.DegreeMax, obj.ServoMin, obj.ServoMax);
+        end
+        
+        function onVerbose(obj, proc)
+            if (obj.Verbose)
+                proc();
+            end
+        end
+    end
 end
-

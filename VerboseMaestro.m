@@ -1,9 +1,9 @@
 classdef VerboseMaestro < MaestroInterface
     methods (Static)
         function res = buildLogSpec(type)
-            str1 = 'Setting servo %i to';
-            str2 = ' %i';
-            res = strcat(str1, ' ', type, str2);
+            str1 = 'Setting servo %i to:\t';
+            str2 = ' %i\n';
+            res = strcat(str1, type, str2);
         end
     end
     methods

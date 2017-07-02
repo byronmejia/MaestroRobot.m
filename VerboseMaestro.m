@@ -1,4 +1,4 @@
-classdef VerboseRobot < RobotInterface
+classdef VerboseMaestro < MaestroInterface
     methods (Static)
         function res = buildLogSpec(type)
             str1 = 'Setting servo %i to';
@@ -7,7 +7,7 @@ classdef VerboseRobot < RobotInterface
         end
     end
     methods
-        function gobj = VerboseRobot(verbose)
+        function gobj = VerboseMaestro(verbose)
             if nargin > 0
                 assert(islogical(verbose));
                 gobj.Verbose = verbose;
@@ -22,7 +22,7 @@ classdef VerboseRobot < RobotInterface
         function setTarget(obj, servo, target)
             assert(isnumeric(servo), "servo argument is not a numeric");
             assert(isnumeric(target), "target argument is not a numeric");
-            formatSpec = VerboseRobot.buildLogSpec('target');
+            formatSpec = VerboseMaestro.buildLogSpec('target');
             proc = @() fprintf(formatSpec, servo, target);
             obj.onVerbose(proc);
         end
@@ -30,7 +30,7 @@ classdef VerboseRobot < RobotInterface
         function setAccel(obj, servo, target)
             assert(isnumeric(servo), "servo argument is not a numeric");
             assert(isnumeric(target), "target argument is not a numeric");
-            formatSpec = VerboseRobot.buildLogSpec('acceleration');
+            formatSpec = VerboseMaestro.buildLogSpec('acceleration');
             proc = @() fprintf(formatSpec, servo, target);
             obj.onVerbose(proc);
         end
@@ -38,7 +38,7 @@ classdef VerboseRobot < RobotInterface
         function setSpeed(obj, servo, target)
             assert(isnumeric(servo), "servo argument is not a numeric");
             assert(isnumeric(target), "target argument is not a numeric");
-            formatSpec = VerboseRobot.buildLogSpec('speed');
+            formatSpec = VerboseMaestro.buildLogSpec('speed');
             proc = @() fprintf(formatSpec, servo, target);
             obj.onVerbose(proc);
         end

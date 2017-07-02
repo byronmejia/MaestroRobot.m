@@ -1,4 +1,4 @@
-classdef MaestroRobot < VerboseRobot
+classdef Maestro < VerboseMaestro
     methods (Static)
         function unsafeSystem(cmd)
             [status, msg] = system(cmd);
@@ -7,36 +7,36 @@ classdef MaestroRobot < VerboseRobot
     end
 
     methods
-        function gobj = MaestroRobot(servoCount, verbose)
-            gobj = gobj@VerboseRobot(verbose);
-            if ~exist('servoCount','var')
-                gobj.ServoCount = 6;
+        function gobj = Maestro(varargin)
+            gobj = gobj@VerboseMaestro(true);
+            if nargin > 0
+                assert(isnumeric(varargin{1}));
+                gobj.ServoCount = varargin{1};
             else
-                assert(isnumeric(servoCount));
-                gobj.ServoCount = servoCount;
+                gobj.ServoCount = 6;
             end
         end
 
         function setTarget(obj, servo, target)
-            setTarget@VerboseRobot(obj, servo, target);
+            setTarget@VerboseMaestro(obj, servo, target);
             command = sprintf('UscCmd --servo %i, %i', servo, target);
-            MaestroRobot.unsafeSystem(command);
+            Maestro.unsafeSystem(command);
         end
         
         function setAccel(obj, servo, target)
-            setAccel@VerboseRobot(obj, servo, target);
+            setAccel@VerboseMaestro(obj, servo, target);
             command = sprintf('UscCmd --accel %i, %i', servo, target);
-            MaestroRobot.unsafeSystem(command);
+            Maestro.unsafeSystem(command);
         end
         
         function setSpeed(obj, servo, target)
-            setSpeed@VerboseRobot(obj, servo, target);
+            setSpeed@VerboseMaestro(obj, servo, target);
             command = sprintf('UscCmd --speed %i, %i', servo, target);
-            MaestroRobot.unsafeSystem(command);
+            Maestro.unsafeSystem(command);
         end
         
         function goHome(obj)
-            goHome@VerboseRobot(obj);
+            goHome@VerboseMaestro(obj);
             for n = 0:(obj.ServoCount - 1)
                 obj.setTarget(n, 6000);
             end

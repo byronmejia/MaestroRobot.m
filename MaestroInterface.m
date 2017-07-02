@@ -17,7 +17,7 @@ classdef MaestroInterface < handle
         setSpeed(obj, servo, speed)
     end
     
-    methods
+    methods (Sealed)
         function onVerbose(obj, proc)
             if (obj.Verbose)
                 proc();

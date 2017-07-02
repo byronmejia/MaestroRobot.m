@@ -17,6 +17,21 @@ classdef Maestro < MaestroInterface
         end
     end
     
+    methods (Hidden)
+        function sendCommand(obj, cmd)
+            cmd = cat(2, [obj.BaudIndicator, obj.DeviceId], cmd);
+            fwrite(obj.Port, cmd);
+        end
+        
+        function sendAction(obj, action, chan, target)
+            assert(isnumeric(chan), 'Channel cannot be non-numeric');
+            assert(isnumeric(target), 'Target cannot be non-numeric');
+            assert(isnumeric(action), 'Action cannot be non-numeric');
+            cmd = [action, chan, obj.lsb(target), obj.msb(target);];
+            obj.sendCommand(cmd);
+        end
+    end
+    
     methods
         function gobj = Maestro(port)
             gobj.Port = serial(port);
@@ -30,18 +45,6 @@ classdef Maestro < MaestroInterface
         
         function close(obj)
             fclose(obj.Port);
-        end
-        
-        function sendCommand(obj, cmd)
-            cmd = cat(2, [obj.BaudIndicator, obj.DeviceId], cmd);
-            fwrite(obj.Port, cmd);
-        end
-        
-        function sendAction(obj, action, chan, target)
-            lsb = obj.lsb(target);
-            msb = obj.msb(target);
-            cmd = [action, chan, lsb, msb];
-            obj.sendCommand(cmd);
         end
         
         function setTarget(obj, chan, target)

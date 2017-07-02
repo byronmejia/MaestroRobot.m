@@ -55,7 +55,6 @@ classdef Maestro < MaestroInterface
         function setAccel(obj, chan, target)
             obj.sendAction(9, chan, target);
         end
-    end
-    
+    end 
 end
 

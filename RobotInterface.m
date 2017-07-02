@@ -32,5 +32,19 @@ classdef RobotInterface < handle
                 proc();
             end
         end
+        
+        function setDegreeMinMax(obj, min, max)
+            assert(isnumeric(min));
+            assert(isnumeric(max));
+            obj.DegreeMin = min;
+            obj.DegreeMax = max;
+        end
+        
+        function setServoMinMax(obj, min, max)
+            assert(isnumeric(min));
+            assert(isnumeric(max));
+            obj.ServoMin = min;
+            obj.ServoMax = max;
+        end
     end
 end

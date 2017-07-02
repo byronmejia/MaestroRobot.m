@@ -1,9 +1,9 @@
 classdef VerboseRobot < RobotInterface
     methods (Static)
         function res = buildLogSpec(type)
-            str1 = 'Setting servo %i to ';
+            str1 = 'Setting servo %i to';
             str2 = ' %i';
-            res = strcat(str1, type, str2);
+            res = strcat(str1, ' ', type, str2);
         end
     end
     methods
@@ -14,6 +14,9 @@ classdef VerboseRobot < RobotInterface
             else
                 gobj.Verbose = false;
             end
+            
+            gobj.setDegreeMinMax(20, 160);
+            gobj.setServoMinMax(3000, 9000);
         end
         
         function setTarget(obj, servo, target)
@@ -34,7 +37,7 @@ classdef VerboseRobot < RobotInterface
             obj.onVerbose(proc);
         end
         
-        function goHome(obj, ~, ~)
+        function goHome(obj)
             proc = @() disp('Setting all servos to home position');
             obj.onVerbose(proc);
         end

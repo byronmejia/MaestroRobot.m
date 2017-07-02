@@ -14,9 +14,6 @@ classdef VerboseMaestro < MaestroInterface
             else
                 gobj.Verbose = false;
             end
-            
-            gobj.setDegreeMinMax(20, 160);
-            gobj.setServoMinMax(3000, 9000);
         end
         
         function setTarget(obj, servo, target)

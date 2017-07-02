@@ -1,4 +1,8 @@
 classdef MaestroOS < VerboseMaestro
+    properties (SetAccess = protected, GetAccess = protected)
+       ServoCount
+    end
+    
     methods (Static)
         function unsafeSystem(cmd)
             [status, msg] = system(cmd);

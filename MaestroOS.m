@@ -1,4 +1,4 @@
-classdef Maestro < VerboseMaestro
+classdef MaestroOS < VerboseMaestro
     methods (Static)
         function unsafeSystem(cmd)
             [status, msg] = system(cmd);
@@ -7,7 +7,7 @@ classdef Maestro < VerboseMaestro
     end
 
     methods
-        function gobj = Maestro(varargin)
+        function gobj = MaestroOS(varargin)
             gobj = gobj@VerboseMaestro(true);
             if nargin > 0
                 assert(isnumeric(varargin{1}));
@@ -20,19 +20,19 @@ classdef Maestro < VerboseMaestro
         function setTarget(obj, servo, target)
             setTarget@VerboseMaestro(obj, servo, target);
             command = sprintf('UscCmd --servo %i, %i', servo, target);
-            Maestro.unsafeSystem(command);
+            MaestroOS.unsafeSystem(command);
         end
         
         function setAccel(obj, servo, target)
             setAccel@VerboseMaestro(obj, servo, target);
             command = sprintf('UscCmd --accel %i, %i', servo, target);
-            Maestro.unsafeSystem(command);
+            MaestroOS.unsafeSystem(command);
         end
         
         function setSpeed(obj, servo, target)
             setSpeed@VerboseMaestro(obj, servo, target);
             command = sprintf('UscCmd --speed %i, %i', servo, target);
-            Maestro.unsafeSystem(command);
+            MaestroOS.unsafeSystem(command);
         end
         
         function goHome(obj)

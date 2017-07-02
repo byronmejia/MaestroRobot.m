@@ -8,7 +8,7 @@ disp('Robotic Arm Hand Wave Test...');
 waitTime = 0.5;
 
 % Create a new robot, and set it home.
-myRobot = Maestro(true);
+myRobot = MaestroOS(true);
 myRobot.goHome();
 
 % Set servo 1 and 2 at a 'slight' angle (left?)

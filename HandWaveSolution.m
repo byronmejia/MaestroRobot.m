@@ -4,6 +4,7 @@
 
 %% Hand Wave
 % This uses the OS level (Maestro) class.
+% Deprecated
 disp('Robotic Arm Hand Wave Test...');
 waitTime = 0.5;
 

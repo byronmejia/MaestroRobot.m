@@ -1,4 +1,4 @@
-classdef MaestroOS < VerboseMaestro
+classdef MaestroOS < MaestroInterface
     properties (SetAccess = protected, GetAccess = protected)
        ServoCount
     end
@@ -9,41 +9,32 @@ classdef MaestroOS < VerboseMaestro
             assert(status == 0, msg);
         end
     end
+    
+    methods (Hidden, Static)
+        function res = commandBuilder(action, servo, target)
+            assert(isnumeric(servo), 'Servo must be a numeric');
+            assert(isnumeric(target), 'Target must be a numeric');
+            res = sprintf('UscCmd --%s %i, %i', action, servo, target);
+        end
+    end
 
     methods
-        function gobj = MaestroOS(varargin)
-            gobj = gobj@VerboseMaestro(true);
-            if nargin > 0
-                assert(isnumeric(varargin{1}));
-                gobj.ServoCount = varargin{1};
-            else
-                gobj.ServoCount = 6;
-            end
+        function gobj = MaestroOS()
         end
 
-        function setTarget(obj, servo, target)
-            setTarget@VerboseMaestro(obj, servo, target);
-            command = sprintf('UscCmd --servo %i, %i', servo, target);
-            MaestroOS.unsafeSystem(command);
+        function setTarget(~, servo, target)
+            cmd = MaestroOS.commandBuilder('servo', servo, target);
+            MaestroOS.unsafeSystem(cmd);
         end
         
-        function setAccel(obj, servo, target)
-            setAccel@VerboseMaestro(obj, servo, target);
-            command = sprintf('UscCmd --accel %i, %i', servo, target);
-            MaestroOS.unsafeSystem(command);
+        function setAccel(~, servo, target)
+            cmd = MaestroOS.commandBuilder('accel', servo, target);
+            MaestroOS.unsafeSystem(cmd);
         end
         
-        function setSpeed(obj, servo, target)
-            setSpeed@VerboseMaestro(obj, servo, target);
-            command = sprintf('UscCmd --speed %i, %i', servo, target);
-            MaestroOS.unsafeSystem(command);
-        end
-        
-        function goHome(obj)
-            goHome@VerboseMaestro(obj);
-            for n = 0:(obj.ServoCount - 1)
-                obj.setTarget(n, 6000);
-            end
+        function setSpeed(~, servo, target)
+            cmd = MaestroOS.commandBuilder('speed', servo, target);
+            MaestroOS.unsafeSystem(cmd);
         end
     end
 end

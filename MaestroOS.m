@@ -14,7 +14,7 @@ classdef MaestroOS < MaestroInterface
         function res = commandBuilder(action, servo, target)
             assert(isnumeric(servo), 'Servo must be a numeric');
             assert(isnumeric(target), 'Target must be a numeric');
-            res = sprintf('UscCmd --%s %i, %i', action, servo, target);
+            res = sprintf('UscCmd --%s %i,%i', action, servo, target);
         end
     end
 
